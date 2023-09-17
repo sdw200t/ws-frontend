@@ -1,4 +1,4 @@
-![CI](https://github.com/sdw200t/Websockets_dz/actions/workflows/web.yml/badge.svg)
+![CI](https://github.com/sdw200t/ws-frontend/actions/workflows/web.yml/badge.svg)
 
 # Домашнее задание к занятию "8. EventSource, Websockets"
 

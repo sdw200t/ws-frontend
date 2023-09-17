@@ -3,8 +3,8 @@ class Chat {
     this.id;
     this.user;
     this.proceed = document.querySelector(".proceed_modal");
-    this.apiUrl = "http:/localhost:9090";
-    //this.apiUrl = "https://websockets-dz-server.onrender.com/";
+    //this.apiUrl = "http:/localhost:9090";
+    this.apiUrl = "https://ws-dz-server.onrender.com/";
     this.chat = document.querySelector(".chat");
     this.usersWindow = document.querySelector(".user_window");
   }
@@ -38,8 +38,8 @@ class Chat {
   }
 
   ws() {
-    this.ws = new WebSocket("ws://localhost:9090/ws");
-    //this.ws = new WebSocket("wss://websockets-dz-server.onrender.com/ws");
+    //this.ws = new WebSocket("ws://localhost:9090/ws");
+    this.ws = new WebSocket("wss://ws-dz-server.onrender.com//ws");
     this.ws.addEventListener("message", (e) => {
       const chatData = JSON.parse(e.data);
       if (chatData.type == "users") {
@@ -65,8 +65,8 @@ class Chat {
 
   async CheckUserName(userName) {
     if (userName.length > 0) {
-      const request = fetch("http://localhost:9090/checkUserName", {
-      //const request = fetch("https://websockets-dz-server.onrender.com/checkUserName", {
+      //const request = fetch("http://localhost:9090/checkUserName", {
+      const request = fetch("https://ws-dz-server.onrender.com/checkUserName", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
