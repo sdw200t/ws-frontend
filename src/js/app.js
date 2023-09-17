@@ -3,29 +3,29 @@ class Chat {
     this.id;
     this.user;
     this.proceed = document.querySelector(".proceed_modal");
-    //this.apiUrl = "http:/localhost:9090";
+    // this.apiUrl = "http:/localhost:9090";
     this.apiUrl = "https://ws-dz-server.onrender.com/";
     this.chat = document.querySelector(".chat");
     this.usersWindow = document.querySelector(".user_window");
   }
 
   createMessage(data) {
-    let message = document.createElement("div");
+    const message = document.createElement("div");
 
-    if (data["user"] == this.user) {
+    if (data.user == this.user) {
       message.className = "my_message";
       message.innerHTML = `<div class="title">
                 <div class="user">You,</div>
-                <div class="message_date">${data["date"]}</div>
+                <div class="message_date">${data.date}</div>
             </div>
-            <div class="message_text">${data["message"]}</div>`;
+            <div class="message_text">${data.message}</div>`;
     } else {
       message.className = "message";
       message.innerHTML = `<div class="title my">
-                <div class="user my">${data["user"]},</div>
-                <div class="message_date my">${data["date"]}</div>
+                <div class="user my">${data.user},</div>
+                <div class="message_date my">${data.date}</div>
             </div>
-            <div class="message_text">${data["message"]}</div>`;
+            <div class="message_text">${data.message}</div>`;
     }
 
     this.chat.appendChild(message);
@@ -38,7 +38,7 @@ class Chat {
   }
 
   ws() {
-    //this.ws = new WebSocket("ws://localhost:9090/ws");
+    // this.ws = new WebSocket("ws://localhost:9090/ws");
     this.ws = new WebSocket("wss://ws-dz-server.onrender.com//ws");
     this.ws.addEventListener("message", (e) => {
       const chatData = JSON.parse(e.data);
@@ -51,7 +51,7 @@ class Chat {
     });
 
     document.addEventListener("keypress", (e) => {
-      let messageValue = document.querySelector(".input").value;
+      const messageValue = document.querySelector(".input").value;
       if (e.key === "Enter" && messageValue) {
         const message = {
           user: this.user,
@@ -65,15 +65,14 @@ class Chat {
 
   async CheckUserName(userName) {
     if (userName.length > 0) {
-      //const request = fetch("http://localhost:9090/checkUserName", {
+      // const request = fetch("http://localhost:9090/checkUserName", {
       const request = fetch("https://ws-dz-server.onrender.com/checkUserName", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ user: userName, id: this.id }),
-        }
-      );
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user: userName, id: this.id }),
+      });
       const result = await request;
       if (result.status == 202) {
         alert("Такой никнейм занят! Вам необходимо выбрать другой.");
@@ -86,8 +85,8 @@ class Chat {
   }
 
   showChat() {
-    let nickChoice = document.querySelector(".registration");
-    let chat = document.querySelector(".chat_area");
+    const nickChoice = document.querySelector(".registration");
+    const chat = document.querySelector(".chat_area");
 
     nickChoice.classList.add("fog");
     chat.classList.remove("fog");
@@ -96,13 +95,13 @@ class Chat {
   displayUsers(usersList) {
     this.removeChilds(this.usersWindow);
     let usr = "";
-    for (let user of Object.values(usersList)) {
+    for (const user of Object.values(usersList)) {
       if (user == this.user) {
         usr = "You";
       } else {
         usr = user;
       }
-      let displayUser = document.createElement("div");
+      const displayUser = document.createElement("div");
       displayUser.className = "online_user";
       displayUser.innerHTML = `<div class="circle"></div>
             <div class="username">${usr}</div>`;
@@ -117,5 +116,5 @@ class Chat {
   }
 }
 
-let worker = new Chat();
+const worker = new Chat();
 worker.listener();
